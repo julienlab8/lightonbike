@@ -24,9 +24,12 @@ Dernière mise à jour : 13/11/2026.
 - [ ] **Date de clôture** des inscriptions
 - [ ] **Partenaires** : niveaux éventuels (institutionnel, majeur...) ; affichés sans hiérarchie pour l'instant
 
+## Confirmé
+
+- Étoiles : 80 KM*, 145 KM***, LIGHT ON BIKE Pierre-Percée*** (toujours trois étoiles).
+
 ## À vérifier
 
-- [ ] **Étoiles de l'événement** : formats en 80 KM* et 145 KM***, événement encore écrit « Pierre-Percée** ». Passer à « Pierre-Percée*** » ? (`EVENT_STARS` dans `tools/build.py`)
 - [ ] **Jour d'ouverture des inscriptions** : le 7 décembre 2026 tombe un lundi (et non un mardi). Le site affiche « 7 décembre 2026 - 20h », sans jour.
 - [ ] **Distance du 145 KM** : le tracé OpenRunner mis à jour mesure 147,9 km (2 439 m D+). L'appellation reste 145 KM, la distance exacte est affichée sur la page du parcours.
 - [ ] **Priorités de passage** : formulation reprise telle quelle (« routes ouvertes à la circulation, avec priorités de passage ») ; détail à préciser dans le règlement.

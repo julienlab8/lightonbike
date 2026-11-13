@@ -41,7 +41,7 @@ START = {"80": "9h", "145": "8h"}          # horaires de départ confirmés
 # Étoiles : les textes sont écrits avec « 80 KM* », « 145 KM** » et « Pierre-Percée** » ;
 # finalize() applique ensuite les étoiles ci-dessous partout (pages, titres, recherche).
 STARS = {"80": "*", "145": "***"}
-EVENT_STARS = "**"
+EVENT_STARS = "***"
 EVENT = "LIGHT ON BIKE Pierre-Percée" + EVENT_STARS
 PARTNERS = [  # (nom, lien, logo sur fond clair, logo blanc pour le bandeau, classe)
     ("Pierre-Percée Pays des Lacs", "https://www.paysdeslacs.com/", "assets/partners/pierre-percee.png", "assets/partners/pierre-percee.png", "pp"),
