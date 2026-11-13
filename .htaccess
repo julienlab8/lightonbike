@@ -1,0 +1,33 @@
+# Types de fichiers modernes
+AddType image/webp .webp
+AddType font/woff2 .woff2
+AddType application/gpx+xml .gpx
+AddDefaultCharset UTF-8
+
+# Page d'erreur LIGHT ON
+ErrorDocument 404 /404.html
+
+# Fichiers internes du projet : jamais servis
+<FilesMatch "^(README|A-CONFIRMER)\.md$">
+  Require all denied
+</FilesMatch>
+RedirectMatch 404 ^/(tools|photos-source|livrables)/
+
+# Les pages sont toujours revérifiées auprès du serveur (CSS/JS/images versionnés par "?v=")
+<IfModule mod_headers.c>
+  <FilesMatch "\.(html|txt|xml)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+  <FilesMatch "^search-index\.json$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# Une seule adresse officielle : https://www.lightonbike.com/
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^lightonbike\.com$ [NC]
+RewriteRule ^(.*)$ https://www.lightonbike.com/$1 [R=301,L]
+RewriteCond %{THE_REQUEST} \s/+index\.html[\s?] [NC]
+RewriteRule ^index\.html$ https://www.lightonbike.com/ [R=301,L]
+</IfModule>

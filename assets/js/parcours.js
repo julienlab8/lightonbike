@@ -66,8 +66,12 @@
           .addTo(map).bindTooltip(tip, { className: 'rm-tip', direction: 'top', offset: [0, -12] });
       };
       r.cols.forEach(function (c, n) { pin(c.ll, n + 1, '', esc(c.n) + ' · ' + c.alt + ' m · km ' + frNum(c.km, 1)); });
-      pin(pts[pts.length - 1], 'A', 'se', 'Arrivée du tracé');
-      pin(pts[0], 'D', 'se', 'Départ du tracé');
+      if (hav(pts[0], pts[pts.length - 1]) < 150) {
+        pin(pts[0], 'D', 'se', 'Départ et arrivée');   // boucle : un seul repère
+      } else {
+        pin(pts[pts.length - 1], 'A', 'se', 'Arrivée');
+        pin(pts[0], 'D', 'se', 'Départ');
+      }
       cursor = L.circleMarker(pts[0], { radius: 7, color: '#ed5f3e', weight: 3, fillColor: '#fff', fillOpacity: 1, opacity: 0, interactive: false }).addTo(map);
       cursor.setStyle({ fillOpacity: 0 });
       // la molette ne zoome qu'après un clic sur la carte (pas de piège au défilement)

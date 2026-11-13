@@ -18,12 +18,13 @@ Après une modification : `python3 tools/build.py`, et changer `v` dans `SITE` s
 
 ## Conventions
 
-- Épreuves : **80 KM\*** et **145 KM\*\*** ; événement : **LIGHT ON BIKE Pierre-Percée\*\*** ; organisateur : **LIGHT ON**.
-- Horaires : 145 KM** à 8h, 80 KM* à 9h.
-- Chiffres des parcours : ceux des tracés OpenRunner (79,1 km / 1 158 m D+ ; 146,5 km / 2 425 m D+). Ne rien inventer : ce qui n'est pas validé reste « À confirmer ».
+- Épreuves : **80 KM\*** et **145 KM\*\*\*** ; événement : **LIGHT ON BIKE Pierre-Percée** (étoiles réglées par `STARS` et `EVENT_STARS` dans `tools/build.py`) ; organisateur : **LIGHT ON**.
+- Dimanche 5 septembre 2027, Base de Loisirs Pierre-Percée. Départs : 145 KM à 8h, 80 KM à 9h. Cyclosportive chronométrée, routes ouvertes avec priorités de passage.
+- Chiffres des parcours : ceux des tracés OpenRunner (80,5 km / 1 174 m D+ ; 147,9 km / 2 439 m D+), insérés automatiquement. Ne rien inventer : ce qui n'est pas validé reste « À confirmer ».
 - DA et ton : identiques à LIGHT ON TRAIL (noir `#232323`, orange `#ed5f3e`, Lemon Milk + Roboto, pas de tirets longs, pas de superlatifs).
 - Photos : vélo uniquement.
 
 ## Logo
 
 `livrables/logo/` : SVG et PNG transparents (blanc/orange pour fonds sombres, noir/orange pour fonds clairs). Seul le mot « TRAIL » du logo d'origine a été remplacé par « BIKE » (Lemon Milk, même hauteur, même ligne de base, même interlettrage).
+- Points en attente : voir `A-CONFIRMER.md`.

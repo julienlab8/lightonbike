@@ -63,6 +63,31 @@
     });
   })();
 
+  // Compte à rebours jusqu'au premier départ (date lue dans data-target, heure locale)
+  (function () {
+    var root = document.getElementById('countdown');
+    if (!root || !root.getAttribute('data-target')) return;
+    var p = root.getAttribute('data-target').split(/[-T:]/).map(Number);
+    var target = new Date(p[0], p[1] - 1, p[2], p[3] || 0, p[4] || 0, 0).getTime();
+    var out = {
+      d: root.querySelector('[data-cd="d"]'),
+      h: root.querySelector('[data-cd="h"]'),
+      m: root.querySelector('[data-cd="m"]'),
+      s: root.querySelector('[data-cd="s"]')
+    };
+    function pad(n) { return (n < 10 ? '0' : '') + n; }
+    function tick() {
+      var diff = Math.max(0, target - Date.now());
+      var sec = Math.floor(diff / 1000);
+      out.d.textContent = Math.floor(sec / 86400);
+      out.h.textContent = pad(Math.floor(sec % 86400 / 3600));
+      out.m.textContent = pad(Math.floor(sec % 3600 / 60));
+      out.s.textContent = pad(sec % 60);
+    }
+    tick();
+    setInterval(tick, 1000);
+  })();
+
   // Newsletter: submit to Brevo via hidden iframe, inline confirmation
   (function () {
     var form = document.getElementById('newsForm');

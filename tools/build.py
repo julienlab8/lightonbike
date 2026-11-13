@@ -21,22 +21,55 @@ sys.path.insert(0, str(ROOT / "tools"))
 # Informations de l'événement. Chaîne vide = « À confirmer » sur le site.
 # ----------------------------------------------------------------------------
 SITE = {
-    "wip": True,                 # bandeau « version de travail » ; passer à False à la publication
-    "base_url": "",              # ex. https://www.lightonbike.com/ (canonical, Open Graph, sitemap)
-    "registration_url": "",      # lien d'inscription ; vide = aucun lien externe, boutons vers infos.html#inscriptions
-    "date": "",                  # ex. Dimanche 6 juin 2027
-    "place": "",                 # lieu d'accueil confirmé (village, départ, arrivée)
-    "status": "",                # cyclosportive chronométrée, randonnée...
+    "wip": True,                 # bandeau « version de travail » + noindex ; passer à False à la publication
+    "base_url": "https://www.lightonbike.com/",
+    "registration_url": "",      # lien d'inscription (à venir) ; vide = aucun lien externe, boutons vers infos.html#inscriptions
+    "registration_opens": "7 décembre 2026 - 20h",
+    "places": "400 places par format",
+    "date": "Dimanche 5 septembre 2027",
+    "date_short": "5 septembre 2027",
+    "date_iso": "2027-09-05",
+    "place": "Base de Loisirs Pierre-Percée",
+    "place_near": "à proximité de Celles-sur-Plaine",
+    "status": "Cyclosportive chronométrée",
     "price_80": "", "price_145": "",
     "email": "hello@lightontri.com",
     "phone": "03 74 47 56 52", "phone_href": "+33374475652",
-    "v": "20261113a",            # à changer après chaque modification CSS/JS
+    "v": "20261113b",            # à changer après chaque modification CSS/JS
 }
 START = {"80": "9h", "145": "8h"}          # horaires de départ confirmés
-STARS = {"80": "*", "145": "**"}
-EVENT = "LIGHT ON BIKE Pierre-Percée**"
+# Étoiles : les textes sont écrits avec « 80 KM* », « 145 KM** » et « Pierre-Percée** » ;
+# finalize() applique ensuite les étoiles ci-dessous partout (pages, titres, recherche).
+STARS = {"80": "*", "145": "***"}
+EVENT_STARS = "**"
+EVENT = "LIGHT ON BIKE Pierre-Percée" + EVENT_STARS
+PARTNERS = [  # (nom, lien, logo sur fond clair, logo blanc pour le bandeau, classe)
+    ("Pierre-Percée Pays des Lacs", "https://www.paysdeslacs.com/", "assets/partners/pierre-percee.png", "assets/partners/pierre-percee.png", "pp"),
+    ("N2A Expertises", "https://www.n2aexpertises.fr/", "assets/partners/n2a.svg", "assets/partners/n2a.svg", ""),
+    ("Activa Location de véhicules", "https://activa-location.com/", "assets/partners/activa.png", "assets/partners/white/activa.png", ""),
+    ("Europe 2", "https://www.europe2.fr/", "assets/partners/europe2.png", "assets/partners/white/europe2.png", ""),
+]
 
 R = json.loads((ROOT / "tools/data/routes-built.json").read_text())
+
+# Chiffres des tracés, insérés dans les textes par finalize() : [[km80]], [[up145]]...
+NUMS = {}
+for _k in ("80", "145"):
+    NUMS["km" + _k] = R[_k]["km"]
+    NUMS["kmr" + _k] = str(round(R[_k]["km_num"]))
+    NUMS["up" + _k] = ("{:,}".format(R[_k]["ascent"])).replace(",", "&nbsp;")
+    NUMS["upraw" + _k] = str(R[_k]["ascent"])
+    NUMS["donon" + _k] = str(round([c for c in R[_k]["cols"] if "Donon" in c["n"]][0]["km"]))
+NUMS["kmdiff"] = str(round(R["145"]["km_num"] - R["80"]["km_num"]))
+NUMS["col1"] = str(round(R["80"]["cols"][0]["km"]))
+
+def finalize(s):
+    """Insère les chiffres des tracés et applique les étoiles configurées."""
+    for k, v in NUMS.items():
+        s = s.replace("[[%s]]" % k, v)
+    s = re.sub(r"145 KM(<em>)?\*+", lambda m: "145 KM" + (m.group(1) or "") + STARS["145"], s)
+    s = re.sub(r"80 KM(<em>)?\*+", lambda m: "80 KM" + (m.group(1) or "") + STARS["80"], s)
+    return re.sub(r"(Pierre-Percée|PIERRE-PERCÉE|Les parcours<em>)\*+", lambda m: m.group(1) + EVENT_STARS, s)
 
 
 # ----------------------------------------------------------------------------
@@ -148,7 +181,7 @@ def head(p):
 <meta property="og:site_name" content="LIGHT ON BIKE Pierre-Percée**" />
 <meta property="og:title" content="%(title)s" />
 <meta property="og:description" content="%(desc)s" />
-<meta name="twitter:card" content="summary_large_image" />
+%(ogimg)s<meta name="twitter:card" content="summary_large_image" />
 <meta name="description" content="%(desc)s" />
 <link rel="icon" type="image/svg+xml" href="assets/logo/favicon.svg?v=3" />
 <link rel="icon" type="image/png" sizes="48x48" href="assets/logo/favicon-48.png?v=3" />
@@ -158,7 +191,8 @@ def head(p):
 <link rel="stylesheet" href="assets/css/site.css?v=%(v)s" />
 <link rel="stylesheet" href="assets/css/bike.css?v=%(v)s" />
 %(extra)s</head>
-""" % {"title": p["title"], "desc": p["desc"], "seo": seo, "robots": robots, "v": SITE["v"], "extra": extra}
+""" % {"title": p["title"], "desc": p["desc"], "seo": seo, "robots": robots, "v": SITE["v"], "extra": extra,
+       "ogimg": ('<meta property="og:image" content="%sassets/img/partage.jpg" />\n<meta property="og:image:width" content="1200" />\n<meta property="og:image:height" content="630" />\n' % base) if base else ""}
 
 def header(p):
     f = p["file"]
@@ -206,7 +240,7 @@ def header(p):
           <a class="mega-promo" href="parcours.html">
             <span class="mega-trace">%(promo)s</span>
             <span class="mega-promo-cap">
-              <span class="mp-k">Deux parcours route</span>
+              <span class="mp-k">5 septembre 2027</span>
               <span class="mp-t">80 KM* · 145 KM**</span>
             </span>
           </a>
@@ -258,7 +292,7 @@ def footer(p):
         <a class="brand" href="./">
           <img src="assets/logo/logo-blanc-orange.svg?v=%(v)s" alt="LIGHT ON BIKE" width="200" height="33" style="height:52px;" />
         </a>
-        <p>LIGHT ON BIKE Pierre-Percée**&nbsp;: 80 ou 145 KM à vélo de route au départ de Pierre-Percée, col du Donon compris. Un événement LIGHT ON. Le goût de l'effort, grandeur nature.</p>
+        <p>LIGHT ON BIKE Pierre-Percée**&nbsp;: cyclosportive chronométrée, 80 ou 145 KM au départ de la Base de Loisirs Pierre-Percée, dimanche 5 septembre 2027. Un événement LIGHT ON. Le goût de l'effort, grandeur nature.</p>
       </div>
       <div class="foot-col">
         <p class="foot-h">Naviguer</p>
@@ -308,7 +342,11 @@ def main():
     import pages
     built, index = [], []
     for p in pages.all_pages(sys.modules[__name__]):
-        doc = head(p) + header(p) + '\n<main id="top">\n' + p["body"] + "\n</main>\n" + footer(p)
+        for key in ("title", "desc", "body"):
+            p[key] = finalize(p[key])
+        doc = finalize(head(p) + header(p)) + '\n<main id="top">\n' + p["body"] + "\n</main>\n" + finalize(footer(p))
+        left = re.findall(r"\[\[\w+\]\]", doc)
+        assert not left, (p["file"], left)
         (ROOT / p["file"]).write_text(doc, encoding="utf-8")
         built.append(p["file"])
         if p.get("search", True):
@@ -316,9 +354,14 @@ def main():
             index.append({"u": "" if p["file"] == "index.html" else p["file"], "t": html.unescape(p["title"]),
                           "d": html.unescape(p["desc"]), "h": heads, "b": text_of(p["body"])})
     (ROOT / "assets/search-index.json").write_text(json.dumps(index, ensure_ascii=False), encoding="utf-8")
+    base = SITE["base_url"]
+    if base:
+        urls = [base + ("" if f == "index.html" else f) for f in built if f != "404.html"]
+        (ROOT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+            + "".join("  <url><loc>%s</loc></url>\n" % u for u in urls) + "</urlset>\n", encoding="utf-8")
     print("pages :", ", ".join(built))
     todo = sum(len(re.findall(r'class="tbc"', (ROOT / f).read_text())) for f in built)
-    print("mentions « À confirmer » restantes :", todo)
+    print("mentions « À confirmer / À venir » restantes :", todo)
 
 if __name__ == "__main__":
     main()
