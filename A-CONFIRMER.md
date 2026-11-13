@@ -5,13 +5,12 @@ Dernière mise à jour : 13/11/2026.
 
 ## À redemander (annoncé « à venir » ou « plus tard »)
 
-- [ ] **Lien d'inscription** (ouverture le 7 décembre 2026 - 20h) -> `registration_url` dans `tools/build.py`
+- [ ] **Lien d'inscription** (ouverture le mardi 8 décembre 2026 - 20h) -> `registration_url` dans `tools/build.py`
 - [ ] **Conditions de participation** : âge minimum, licence, justificatif médical
 - [ ] **Ravitaillements** : nombre, emplacements (km), contenu, ravitaillement d'arrivée
 - [ ] **Réseaux sociaux** de LIGHT ON BIKE (Instagram, Facebook...) : aucun lien affiché pour l'instant
 - [ ] **Newsletter** (formulaire Brevo du site trail) : à reprendre ou non
 - [ ] **Versions EN / DE** du site : à faire ou non
-- [ ] **Photos** : validation de la sélection (voir ci-dessous) et, si possible, photos propres à l'épreuve
 
 ## Sans réponse pour l'instant
 
@@ -26,12 +25,13 @@ Dernière mise à jour : 13/11/2026.
 
 ## Confirmé
 
+- Ouverture des inscriptions : mardi 8 décembre 2026 à 20h.
+- Appellations 80 KM et 145 KM conservées (tracés : 80,5 km et 147,9 km, distance exacte affichée sur les pages parcours).
+- Photos du triathlon de Pierre-Percée 2022 (séquence vélo) validées.
 - Étoiles : 80 KM*, 145 KM***, LIGHT ON BIKE Pierre-Percée*** (toujours trois étoiles).
 
 ## À vérifier
 
-- [ ] **Jour d'ouverture des inscriptions** : le 7 décembre 2026 tombe un lundi (et non un mardi). Le site affiche « 7 décembre 2026 - 20h », sans jour.
-- [ ] **Distance du 145 KM** : le tracé OpenRunner mis à jour mesure 147,9 km (2 439 m D+). L'appellation reste 145 KM, la distance exacte est affichée sur la page du parcours.
 - [ ] **Priorités de passage** : formulation reprise telle quelle (« routes ouvertes à la circulation, avec priorités de passage ») ; détail à préciser dans le règlement.
 
 ## Photos utilisées

@@ -248,7 +248,7 @@ def all_pages(b):
        "prof": b.profile_static("145"), "ev_visual": ev_visual,
        "cta_bg": cta_photo or '<div class="cta-art">%s</div>' % trace(["145", "80"], 1000, 640, 10, dots=False), "picto": b.PICTO}
     pages.append({"file": "index.html", "title": "LIGHT ON BIKE Pierre-Percée** · Cyclosportive 80 et 145 km · 5 septembre 2027",
-                  "desc": "LIGHT ON BIKE Pierre-Percée** : cyclosportive chronométrée le dimanche 5 septembre 2027, 80 KM* ou 145 KM** au départ de la Base de Loisirs Pierre-Percée. Inscriptions dès le 7 décembre 2026.",
+                  "desc": "LIGHT ON BIKE Pierre-Percée** : cyclosportive chronométrée le dimanche 5 septembre 2027, 80 KM* ou 145 KM** au départ de la Base de Loisirs Pierre-Percée. Inscriptions dès le 8 décembre 2026.",
                   "body": body, "scripts": PROFILE_JS,
                   "head": '<link rel="preload" as="image" href="assets/img/webp/hero-accueil-1280.webp" fetchpriority="high" />\n<script type="application/ld+json">\n%s\n</script>\n' % ld})
 
@@ -453,7 +453,7 @@ def all_pages(b):
        "who": t["who"], "tbc": tbc(), "soon": tbc("À venir"), "other": other, "other_name": name(other),
        "other_txt": ("Envie d'en voir plus&nbsp;? Le 145 KM** ajoute trois cols et [[kmdiff]] km." if k == "80"
                      else "Envie d'une version plus courte&nbsp;? Le 80 KM* garde le Donon et s'arrête à trois cols."),
-       "cta": cta_slim('Le %s vous <em class="pt">tente&nbsp;?</em>' % name(k), "Dimanche 5 septembre 2027, départ à %s. Inscriptions dès le 7 décembre 2026 - 20h." % START[k],
+       "cta": cta_slim('Le %s vous <em class="pt">tente&nbsp;?</em>' % name(k), "Dimanche 5 septembre 2027, départ à %s. Inscriptions dès le 8 décembre 2026 - 20h." % START[k],
                        '<a class="btn btn-ghost" href="parcours.html#comparatif">Comparer les deux formats</a>')}
         pages.append({"file": "parcours-%s-km.html" % k, "title": "Parcours %s · %s km, %s m D+ · LIGHT ON BIKE Pierre-Percée**" % (name(k), r["km"], r["ascent"]),
                       "desc": t["meta"], "body": body, "head": MAP_HEAD, "scripts": MAP_JS})

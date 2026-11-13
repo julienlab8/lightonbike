@@ -24,7 +24,7 @@ SITE = {
     "wip": True,                 # bandeau « version de travail » + noindex ; passer à False à la publication
     "base_url": "https://www.lightonbike.com/",
     "registration_url": "",      # lien d'inscription (à venir) ; vide = aucun lien externe, boutons vers infos.html#inscriptions
-    "registration_opens": "7 décembre 2026 - 20h",
+    "registration_opens": "mardi 8 décembre 2026 - 20h",
     "places": "400 places par format",
     "date": "Dimanche 5 septembre 2027",
     "date_short": "5 septembre 2027",
