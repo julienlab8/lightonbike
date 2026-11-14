@@ -21,7 +21,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 # Informations de l'événement. Chaîne vide = « À confirmer » sur le site.
 # ----------------------------------------------------------------------------
 SITE = {
-    "wip": True,                 # bandeau « version de travail » + noindex ; passer à False à la publication
+    "wip": False,                # bandeau « version de travail » + noindex ; passer à False à la publication
     "base_url": "https://www.lightonbike.com/",
     "registration_url": "",      # lien d'inscription (à venir) ; vide = aucun lien externe, boutons vers infos.html#inscriptions
     "registration_opens": "mardi 8 décembre 2026 - 20h",
@@ -32,10 +32,10 @@ SITE = {
     "place": "Base de Loisirs Pierre-Percée",
     "place_near": "à proximité de Celles-sur-Plaine",
     "status": "Cyclosportive chronométrée",
-    "price_80": "", "price_145": "",
+    "price_80": "39&nbsp;€", "price_145": "49&nbsp;€",
     "email": "hello@lightontri.com",
     "phone": "03 74 47 56 52", "phone_href": "+33374475652",
-    "v": "20261113b",            # à changer après chaque modification CSS/JS
+    "v": "20261114a",            # à changer après chaque modification CSS/JS
 }
 START = {"80": "9h", "145": "8h"}          # horaires de départ confirmés
 # Étoiles : les textes sont écrits avec « 80 KM* », « 145 KM** » et « Pierre-Percée** » ;
@@ -76,6 +76,8 @@ def finalize(s):
 # Petits utilitaires
 # ----------------------------------------------------------------------------
 def tbc(label="À confirmer"):
+    if not SITE["wip"]:
+        label = "À venir"          # site public : une seule mention, plus naturelle pour les visiteurs
     return '<span class="tbc">%s</span>' % label
 
 def val(key, label="À confirmer"):

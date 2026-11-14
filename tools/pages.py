@@ -128,7 +128,10 @@ def all_pages(b):
          "startDate": SITE["date_iso"] + "T08:00:00+02:00", "endDate": SITE["date_iso"],
          "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
          "location": {"@type": "Place", "name": SITE["place"], "geo": {"@type": "GeoCoordinates", "latitude": round(R["80"]["start"][0], 4), "longitude": round(R["80"]["start"][1], 4)}},
-         "image": [SITE["base_url"] + "assets/img/partage.jpg"], "organizer": {"@id": SITE["base_url"] + "#organisation"}, "url": SITE["base_url"]}]},
+         "image": [SITE["base_url"] + "assets/img/partage.jpg"],
+         "offers": [{"@type": "Offer", "name": "80 KM", "price": "39", "priceCurrency": "EUR", "url": SITE["base_url"] + "infos.html#inscriptions", "validFrom": "2026-12-08T20:00:00+01:00"},
+                    {"@type": "Offer", "name": "145 KM", "price": "49", "priceCurrency": "EUR", "url": SITE["base_url"] + "infos.html#inscriptions", "validFrom": "2026-12-08T20:00:00+01:00"}],
+         "organizer": {"@id": SITE["base_url"] + "#organisation"}, "url": SITE["base_url"]}]},
         ensure_ascii=False, indent=1)
     body = """
   <!-- ============ HERO ============ -->
@@ -179,7 +182,7 @@ def all_pages(b):
         <div><dt>Format</dt><dd>%(status)s<span>Routes ouvertes, avec priorités de passage</span></dd></div>
         <div><dt>Distances</dt><dd>80 KM* · 145 KM**<span>%(up80)s m et %(up145)s m de D+. Trois cols sur le 80, six sur le 145</span></dd></div>
         <div><dt>Départs</dt><dd>8h · 9h<span>Le 145 part en premier, le 80 une heure après</span></dd></div>
-        <div><dt>Inscriptions</dt><dd>%(opens)s<span>%(places)s. Tarifs %(tbc)s</span></dd></div>
+        <div><dt>Inscriptions</dt><dd>%(opens)s<span>%(places)s. %(p80)s le 80 KM*, %(p145)s le 145 KM**</span></dd></div>
       </dl>
     </div>
   </section>
@@ -242,7 +245,7 @@ def all_pages(b):
   </section>
 %(ticker)s
 """ % {"hero": hero_visual, "date": date, "place": SITE["place"], "near": SITE["place_near"], "status": SITE["status"], "iso": SITE["date_iso"],
-       "opens": SITE["registration_opens"], "places": SITE["places"], "date_low": SITE["date"].lower(), "gallery": gallery, "ticker": ticker,
+       "opens": SITE["registration_opens"], "places": SITE["places"], "p80": SITE["price_80"], "p145": SITE["price_145"], "date_low": SITE["date"].lower(), "gallery": gallery, "ticker": ticker,
        "reg": reg(), "bolt": b.BOLT, "tbc": tbc(), "km80": R["80"]["km"], "km145": R["145"]["km"],
        "up80": num(R["80"]["ascent"]), "up145": num(R["145"]["ascent"]), "race80": race("80"), "race145": race("145"),
        "prof": b.profile_static("145"), "ev_visual": ev_visual,
@@ -292,7 +295,7 @@ def all_pages(b):
       <div class="sec-head">
         <span class="eyebrow">Comparatif</span>
         <h2 class="h-sec" style="max-width:20ch;">Les deux formats en un coup <span class="nw">d'œil<span class="sq">.</span></span></h2>
-        <p class="lede">Distances, dénivelés et altitudes sont ceux des tracés publiés sur OpenRunner. Les lignes marquées «&nbsp;À confirmer&nbsp;» seront complétées par l'organisation.</p>
+        <p class="lede">Distances, dénivelés et altitudes sont ceux des tracés publiés sur OpenRunner. Les lignes marquées «&nbsp;À venir&nbsp;» seront complétées au fil des annonces.</p>
       </div>
       <div class="cmp-wrap">
         <table class="cmp two">
@@ -492,10 +495,10 @@ def all_pages(b):
       <div class="timeline">
         <div class="tl-group reveal">
           <div class="tl-dayhead"><span class="d">%(date)s</span><span class="d-sub">Jour de course</span></div>
-          <div class="tl-row"><div class="tl-time">%(tbc_s)s</div><div><div class="tl-title">Accueil &amp; retrait des dossards</div><div class="tl-desc">À la Base de Loisirs Pierre-Percée. Horaires à confirmer.</div></div><span class="tl-tag">Base de Loisirs</span></div>
+          <div class="tl-row"><div class="tl-time">%(tbc_s)s</div><div><div class="tl-title">Accueil &amp; retrait des dossards</div><div class="tl-desc">À la Base de Loisirs Pierre-Percée. Horaires à venir.</div></div><span class="tl-tag">Base de Loisirs</span></div>
           <div class="tl-row"><div class="tl-time">08:00</div><div><div class="tl-title">Départ · 145 KM**</div><div class="tl-desc">Le grand format part en premier.</div></div><span class="tl-tag">145 KM**</span></div>
           <div class="tl-row"><div class="tl-time">09:00</div><div><div class="tl-title">Départ · 80 KM*</div><div class="tl-desc">Une heure plus tard, c'est au tour du 80.</div></div><span class="tl-tag">80 KM*</span></div>
-          <div class="tl-row"><div class="tl-time">%(tbc_s)s</div><div><div class="tl-title">Arrivées &amp; après-course</div><div class="tl-desc">Retour à la Base de Loisirs Pierre-Percée. Temps limites et suite du programme à confirmer.</div></div><span class="tl-tag">Arrivée</span></div>
+          <div class="tl-row"><div class="tl-time">%(tbc_s)s</div><div><div class="tl-title">Arrivées &amp; après-course</div><div class="tl-desc">Retour à la Base de Loisirs Pierre-Percée. Temps limites et suite du programme à venir.</div></div><span class="tl-tag">Arrivée</span></div>
         </div>
       </div>
     </div>
@@ -515,7 +518,7 @@ def all_pages(b):
       </div>
       <div class="icard-grid three steps">
         <div class="icard reveal"><h3>Choisir son parcours</h3><p><a class="ln" href="parcours-80-km.html">80 KM*</a> ou <a class="ln" href="parcours-145-km.html">145 KM**</a>&nbsp;: cartes, profils et traces GPX sont en ligne pour vous décider.</p></div>
-        <div class="icard reveal"><h3>Ouverture &amp; places</h3><p>Ouverture le %(opens)s, en ligne. 400 places par format. Tarifs&nbsp;: %(tbc)s</p></div>
+        <div class="icard reveal"><h3>Ouverture &amp; places</h3><p>Ouverture le %(opens)s, en ligne. 400 places par format. Tarifs&nbsp;: %(p80)s pour le 80 KM*, %(p145)s pour le 145 KM**.</p></div>
         <div class="icard reveal"><h3>Conditions de participation</h3><p>Âge minimum, licence ou justificatif médical&nbsp;: %(soon)s Ils figureront dans le <a class="ln" href="reglement.html">règlement</a>.</p></div>
       </div>
     </div>
@@ -538,9 +541,9 @@ def all_pages(b):
   </section>
 %(cta)s
 """ % {"hasimg": " has-img" if photo("hero-infos") else "", "hero_img": photo("hero-infos", "", "100vw", cls="ph-bg", eager=True),
-       "date": date, "tbc_s": tbc("À venir"), "tbc": tbc(), "soon": tbc("À venir"), "opens": SITE["registration_opens"], "arrow": ARROW, "reg_state": reg_state,
+       "date": date, "tbc_s": tbc("À venir"), "tbc": tbc(), "soon": tbc("À venir"), "opens": SITE["registration_opens"], "p80": SITE["price_80"], "p145": SITE["price_145"], "arrow": ARROW, "reg_state": reg_state,
        "reg_note": ("Rendez-vous sur la plateforme d'inscription." if SITE["registration_url"]
-                    else "400 places par format. Le lien d'inscription et les tarifs seront publiés ici. Une question d'ici là&nbsp;? <a class=\"ln\" href=\"contact.html\">Écrivez-nous</a>."),
+                    else "400 places par format, 39&nbsp;€ le 80 KM* et 49&nbsp;€ le 145 KM**. Le lien d'inscription sera publié ici. Une question d'ici là&nbsp;? <a class=\"ln\" href=\"contact.html\">Écrivez-nous</a>."),
        "reg_btn": (reg() if SITE["registration_url"] else '<a class="btn btn-ghost" href="contact.html">Nous écrire</a>'),
        "acces": sec("acces", "Accès &amp; stationnement", 'Rejoindre le <span class="nw">départ<span class="sq">.</span></span>',
                     "Départ, arrivée et retrait des dossards au même endroit&nbsp;: la Base de Loisirs Pierre-Percée, à proximité de Celles-sur-Plaine.",
@@ -575,7 +578,8 @@ def all_pages(b):
         ("Où trouver la trace GPX&nbsp;?", "Sur la page de chaque parcours, avec la carte et le profil. Téléchargement direct&nbsp;: <a class=\"ln\" href=\"%s\" download>GPX du 80 KM*</a> et <a class=\"ln\" href=\"%s\" download>GPX du 145 KM**</a>. Les deux tracés sont aussi consultables sur OpenRunner." % (GPX("80"), GPX("145"))),
         ("Quels cols sont au programme&nbsp;?", "Sur le 80 KM*&nbsp;: %s. Sur le 145 KM**&nbsp;: %s." % (cols_cell("80"), cols_cell("145"))),
         ("Quand et où a lieu l'événement&nbsp;?", "Le dimanche 5 septembre 2027, à la Base de Loisirs Pierre-Percée, à proximité de Celles-sur-Plaine. Départ et arrivée au même endroit."),
-        ("Comment s'inscrire&nbsp;?", "Les inscriptions ouvrent le %s, en ligne, avec 400 places par format. Le lien d'inscription sera publié sur la page <a class=\"ln\" href=\"infos.html#inscriptions\">Infos pratiques</a>. Tarifs&nbsp;: %s" % (SITE["registration_opens"], tbc())),
+        ("Comment s'inscrire&nbsp;?", "Les inscriptions ouvrent le %s, en ligne, avec 400 places par format. Le lien d'inscription sera publié sur la page <a class=\"ln\" href=\"infos.html#inscriptions\">Infos pratiques</a>." % SITE["registration_opens"]),
+        ("Combien coûte l'inscription&nbsp;?", "39&nbsp;€ pour le 80 KM* et 49&nbsp;€ pour le 145 KM**."),
         ("L'épreuve est-elle chronométrée&nbsp;?", "Oui&nbsp;: LIGHT ON BIKE Pierre-Percée** est une cyclosportive chronométrée, sur les deux formats. On peut viser un temps, ou juste viser le sommet du Donon."),
         ("Les routes sont-elles fermées à la circulation&nbsp;?", "Non&nbsp;: les parcours empruntent des routes ouvertes à la circulation, avec priorités de passage. Le dispositif sera détaillé dans le <a class=\"ln\" href=\"reglement.html\">règlement</a>."),
         ("Où retirer son dossard&nbsp;?", "À la Base de Loisirs Pierre-Percée. Jours et horaires de retrait&nbsp;: %s" % tbc()),
@@ -615,7 +619,7 @@ def all_pages(b):
     <div class="glow a" aria-hidden="true"></div>
     <div class="wrap">
       <h1><span class="eyebrow page-kicker">Règlement</span> Le <span class="nw"><em>règlement</em><span class="sq">.</span></span></h1>
-      <p class="lede">Le règlement de l'épreuve est en cours de rédaction. Voici sa trame et les éléments déjà fixés&nbsp;; les articles en attente sont signalés.</p>
+      <p class="lede">Le règlement complet est en cours de rédaction. Voici les éléments déjà fixés&nbsp;; les articles à venir sont signalés et seront publiés avant l'ouverture des inscriptions.</p>
     </div>
   </section>
 
@@ -645,6 +649,10 @@ def all_pages(b):
 
       <h2>Article 5 · Inscriptions et tarifs</h2>
       <p>Les inscriptions se font en ligne et ouvrent le %(opens)s. Le nombre de places est limité à 400 par format.</p>
+      <ul>
+        <li><strong>80 KM*</strong>&nbsp;: 39&nbsp;€</li>
+        <li><strong>145 KM**</strong>&nbsp;: 49&nbsp;€</li>
+      </ul>
       %(a5)s
 
       <h2>Article 6 · Retrait des dossards</h2>
@@ -685,7 +693,7 @@ def all_pages(b):
        "km80": R["80"]["km"], "up80": num(R["80"]["ascent"]), "km145": R["145"]["km"], "up145": num(R["145"]["ascent"]),
        "a3": pend("Reste du programme (accueil, arrivées, classements et récompenses)"),
        "a4": pend("Âge minimum, licences acceptées, justificatif médical"),
-       "a5": pend("Plateforme d'inscription, tarifs et date de clôture"),
+       "a5": pend("Plateforme d'inscription et date de clôture"),
        "a6": pend("Jours, horaires et pièces à présenter"),
        "a7": pend("Matériel obligatoire (casque, éclairage, réparation), vélos acceptés"),
        "a8": pend("Détail des priorités de passage, signaleurs, assistance médicale"),

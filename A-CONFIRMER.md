@@ -1,7 +1,7 @@
 # LIGHT ON BIKE Pierre-Percée - informations en attente
 
 Liste tenue à jour à chaque échange. Sur le site, ces points portent la mention « À confirmer » ou « À venir ».
-Dernière mise à jour : 13/11/2026.
+Dernière mise à jour : 14/11/2026.
 
 ## À redemander (annoncé « à venir » ou « plus tard »)
 
@@ -14,7 +14,6 @@ Dernière mise à jour : 13/11/2026.
 
 ## Sans réponse pour l'instant
 
-- [ ] **Tarifs** du 80 KM et du 145 KM
 - [ ] **Matériel obligatoire** (casque, éclairage, réparation) et vélos acceptés
 - [ ] **Règlement** : texte complet (la page n'en contient que la trame et les éléments confirmés)
 - [ ] **Retrait des dossards** : jours, horaires, pièces à présenter (lieu confirmé : Base de Loisirs Pierre-Percée)
@@ -28,6 +27,8 @@ Dernière mise à jour : 13/11/2026.
 - Ouverture des inscriptions : mardi 8 décembre 2026 à 20h.
 - Appellations 80 KM et 145 KM conservées (tracés : 80,5 km et 147,9 km, distance exacte affichée sur les pages parcours).
 - Photos du triathlon de Pierre-Percée 2022 (séquence vélo) validées.
+- Tarifs : 39 € (80 KM), 49 € (145 KM).
+- Site ouvert au public le 14/11/2026 : bandeau « version de travail » et blocage Google retirés ; les points en attente s'affichent « À venir ».
 - Étoiles : 80 KM*, 145 KM***, LIGHT ON BIKE Pierre-Percée*** (toujours trois étoiles).
 
 ## À vérifier
@@ -41,6 +42,6 @@ Dossier Drive « PP 2022 - Photos Manu », séquence vélo uniquement (n° Pierr
 
 ## Avant la mise en ligne
 
-- [ ] `wip: False` dans `tools/build.py` (retire le bandeau « version de travail » et le `noindex`)
-- [ ] Déposer le contenu du dossier sur Hostinger (sans `tools/`, `photos-source/`, `livrables/`)
+- [x] `wip: False` dans `tools/build.py` (fait le 14/11/2026)
+- [ ] Déployer sur Hostinger : hPanel > Avancé > Git, dépôt `https://github.com/julienlab8/lightonbike.git`, branche `main`, dans `public_html` vide
 - [ ] Déclarer www.lightonbike.com et le sitemap dans Google Search Console
