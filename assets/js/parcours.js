@@ -88,8 +88,40 @@
       map.addControl(new Switch());
       var saved = null; try { saved = localStorage.getItem('lob-fond'); } catch (e) {}
       setBase(saved || 'sombre', false);
-      L.polyline(pts, { color: '#232323', weight: 8, opacity: 0.9, interactive: false }).addTo(map);
-      var line = L.polyline(pts, { color: '#ed5f3e', weight: 4, interactive: false }).addTo(map);
+      // Style du tracé (aperçu : ?trace=simple|epais|lisere|sens|pente)
+      var traceStyle = (/[?&]trace=(\w+)/.exec(location.search) || [])[1] || 'simple';
+      var O = '#ed5f3e', round = { lineJoin: 'round', lineCap: 'round', interactive: false };
+      var line = L.polyline(pts, L.extend({ color: O, weight: 4, opacity: 0 }, round)).addTo(map);   // sert au cadrage
+      if (traceStyle === 'epais') {
+        L.polyline(pts, L.extend({ color: O, weight: 6 }, round)).addTo(map);
+      } else if (traceStyle === 'lisere') {
+        L.polyline(pts, L.extend({ color: '#fff', weight: 7.5 }, round)).addTo(map);
+        L.polyline(pts, L.extend({ color: O, weight: 4.5 }, round)).addTo(map);
+      } else if (traceStyle === 'pente') {
+        // couleur selon la pente moyenne, par tronçons de 500 m : du clair (plat, descente) au rouge sombre (raide)
+        var seg = 0.5, cols5 = ['#f6c7a8', '#f29a72', '#ed5f3e', '#c93a1e', '#8f1d0c'];
+        for (var d0 = 0; d0 < totalKm; d0 += seg) {
+          var d1 = Math.min(d0 + seg, totalKm), g = (altAt(d1) - altAt(d0)) / ((d1 - d0) * 10);   // pente en %
+          var ci = g < 1 ? 0 : g < 3 ? 1 : g < 5 ? 2 : g < 7 ? 3 : 4, part = [pointAt(d0)];
+          for (var q = 0; q < cum.length; q++) { if (cum[q] > d0 * 1000 && cum[q] < d1 * 1000) part.push(pts[q]); }
+          part.push(pointAt(d1));
+          L.polyline(part, L.extend({ color: cols5[ci], weight: 5 }, round)).addTo(map);
+        }
+      } else {
+        L.polyline(pts, L.extend({ color: O, weight: 4 }, round)).addTo(map);
+        if (traceStyle === 'sens') {
+          // flèches de sens de parcours et bornes kilométriques tous les 10 ou 20 km
+          var stepA = totalKm > 100 ? 20 : 10;
+          for (var ka = stepA; ka < totalKm - 2; ka += stepA) {
+            L.marker(pointAt(ka), { icon: L.divIcon({ className: '', html: '<span class="rm-km">' + ka + '</span>', iconSize: [30, 18], iconAnchor: [15, 9] }), keyboard: false, interactive: false }).addTo(map);
+          }
+          for (var kb = stepA / 2; kb < totalKm - 1; kb += stepA) {
+            var a1 = pointAt(kb - 0.15), a2 = pointAt(kb + 0.15);
+            var ang = Math.atan2((a2[1] - a1[1]) * Math.cos(a1[0] * Math.PI / 180), a2[0] - a1[0]) * 180 / Math.PI;
+            L.marker(pointAt(kb), { icon: L.divIcon({ className: '', html: '<span class="rm-arrow" style="transform:rotate(' + ang.toFixed(0) + 'deg)"></span>', iconSize: [18, 18], iconAnchor: [9, 9] }), keyboard: false, interactive: false }).addTo(map);
+          }
+        }
+      }
       map.fitBounds(line.getBounds(), { padding: [28, 28] });
       var pin = function (ll, label, cls, tip) {
         L.marker(ll, { icon: L.divIcon({ className: '', html: '<span class="rm-pin ' + cls + '">' + label + '</span>', iconSize: [24, 24], iconAnchor: [12, 12] }), keyboard: false })
