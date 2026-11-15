@@ -838,7 +838,7 @@ def all_pages(b):
       <p>Conformément au RGPD et à la loi Informatique et Libertés, vous disposez d'un droit d'accès, de rectification, d'effacement et d'opposition&nbsp;: il suffit d'écrire à <a href="mailto:%(mail)s">%(mail)s</a>. Vous pouvez aussi adresser une réclamation à la <a href="https://www.cnil.fr/" target="_blank" rel="noopener">CNIL</a>.</p>
 
       <h2>Cookies et services tiers</h2>
-      <p>Ce site n'utilise ni outil de mesure d'audience ni cookie publicitaire. Les fonds de carte des pages parcours sont chargés depuis les serveurs d'OpenStreetMap&nbsp;; les tracés proviennent des parcours publiés sur OpenRunner.</p>
+      <p>Ce site n'utilise ni outil de mesure d'audience ni cookie publicitaire. Les fonds de carte des pages parcours sont chargés depuis les serveurs d'OpenStreetMap et, pour la vue satellite, de l'IGN (Géoplateforme)&nbsp;; les tracés proviennent des parcours publiés sur OpenRunner.</p>
     </div>
   </section>
 """ % {"mail": mail, "tel": SITE["phone_href"], "phone": SITE["phone"]}

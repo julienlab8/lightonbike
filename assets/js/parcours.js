@@ -54,10 +54,40 @@
     if (mapEl && window.L) {
       mapEl.innerHTML = '';
       map = L.map(mapEl, { scrollWheelZoom: false, zoomSnap: 0.25 });
-      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 17,
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'
-      }).addTo(map);
+      // Trois fonds de carte au choix : sombre (par défaut), plan, satellite
+      var osm = '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>';
+      var bases = [
+        { id: 'sombre', label: 'Sombre', layer: L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 17, attribution: osm }) },
+        { id: 'plan', label: 'Plan', layer: L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 17, attribution: osm }) },
+        { id: 'satellite', label: 'Satellite', layer: L.tileLayer('https://data.geopf.fr/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=ORTHOIMAGERY.ORTHOPHOTOS&STYLE=normal&FORMAT=image/jpeg&TILEMATRIXSET=PM&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}', { maxZoom: 17, attribution: '&copy; <a href="https://www.ign.fr/" target="_blank" rel="noopener">IGN</a>' }) }
+      ];
+      var current = null, buttons = [];
+      var setBase = function (id, remember) {
+        var next = bases.filter(function (x) { return x.id === id; })[0] || bases[0];
+        if (current) map.removeLayer(current.layer);
+        current = next; next.layer.addTo(map); next.layer.bringToBack();
+        mapEl.setAttribute('data-fond', next.id);
+        buttons.forEach(function (btn) { btn.setAttribute('aria-pressed', btn.getAttribute('data-fond') === next.id ? 'true' : 'false'); });
+        if (remember) { try { localStorage.setItem('lob-fond', next.id); } catch (e) {} }
+      };
+      var Switch = L.Control.extend({
+        options: { position: 'topright' },
+        onAdd: function () {
+          var box = L.DomUtil.create('div', 'rm-fonds');
+          box.setAttribute('role', 'group'); box.setAttribute('aria-label', 'Fond de carte');
+          bases.forEach(function (x) {
+            var btn = L.DomUtil.create('button', '', box);
+            btn.type = 'button'; btn.textContent = x.label; btn.setAttribute('data-fond', x.id);
+            L.DomEvent.on(btn, 'click', function (e) { L.DomEvent.stop(e); setBase(x.id, true); });
+            buttons.push(btn);
+          });
+          L.DomEvent.disableClickPropagation(box);
+          return box;
+        }
+      });
+      map.addControl(new Switch());
+      var saved = null; try { saved = localStorage.getItem('lob-fond'); } catch (e) {}
+      setBase(saved || 'sombre', false);
       L.polyline(pts, { color: '#232323', weight: 8, opacity: 0.9, interactive: false }).addTo(map);
       var line = L.polyline(pts, { color: '#ed5f3e', weight: 4, interactive: false }).addTo(map);
       map.fitBounds(line.getBounds(), { padding: [28, 28] });
