@@ -35,7 +35,7 @@ SITE = {
     "price_80": "39&nbsp;€", "price_145": "49&nbsp;€",
     "email": "hello@lightontri.com",
     "phone": "03 74 47 56 52", "phone_href": "+33374475652",
-    "v": "20261115d",            # à changer après chaque modification CSS/JS
+    "v": "20261115e",            # à changer après chaque modification CSS/JS
 }
 START = {"80": "9h", "145": "8h"}          # horaires de départ confirmés
 # Étoiles : les textes sont écrits avec « 80 KM* », « 145 KM** » et « Pierre-Percée** » ;

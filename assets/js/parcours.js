@@ -88,8 +88,10 @@
       map.addControl(new Switch());
       var saved = null; try { saved = localStorage.getItem('lob-fond'); } catch (e) {}
       setBase(saved || 'sombre', false);
-      L.polyline(pts, { color: '#232323', weight: 8, opacity: 0.9, interactive: false }).addTo(map);
-      var line = L.polyline(pts, { color: '#ed5f3e', weight: 4, interactive: false }).addTo(map);
+      // Tracé : orange de marque bordé d'un fin liseré blanc, lisible sur les trois fonds
+      var round = { lineJoin: 'round', lineCap: 'round', interactive: false };
+      L.polyline(pts, L.extend({ color: '#fff', weight: 7.5 }, round)).addTo(map);
+      var line = L.polyline(pts, L.extend({ color: '#ed5f3e', weight: 4.5 }, round)).addTo(map);
       map.fitBounds(line.getBounds(), { padding: [28, 28] });
       var pin = function (ll, label, cls, tip) {
         L.marker(ll, { icon: L.divIcon({ className: '', html: '<span class="rm-pin ' + cls + '">' + label + '</span>', iconSize: [24, 24], iconAnchor: [12, 12] }), keyboard: false })
