@@ -54,12 +54,12 @@
     if (mapEl && window.L) {
       mapEl.innerHTML = '';
       map = L.map(mapEl, { scrollWheelZoom: false, zoomSnap: 0.25 });
-      // Trois fonds de carte au choix : plan (par défaut), satellite, sombre
+      // Trois fonds de carte au choix, de gauche à droite : sombre (par défaut), plan, satellite
       var osm = '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>';
       var bases = [
+        { id: 'sombre', label: 'Sombre', layer: L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 17, attribution: osm }) },
         { id: 'plan', label: 'Plan', layer: L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 17, attribution: osm }) },
-        { id: 'satellite', label: 'Satellite', layer: L.tileLayer('https://data.geopf.fr/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=ORTHOIMAGERY.ORTHOPHOTOS&STYLE=normal&FORMAT=image/jpeg&TILEMATRIXSET=PM&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}', { maxZoom: 17, attribution: '&copy; <a href="https://www.ign.fr/" target="_blank" rel="noopener">IGN</a>' }) },
-        { id: 'sombre', label: 'Sombre', layer: L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 17, attribution: osm }) }
+        { id: 'satellite', label: 'Satellite', layer: L.tileLayer('https://data.geopf.fr/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=ORTHOIMAGERY.ORTHOPHOTOS&STYLE=normal&FORMAT=image/jpeg&TILEMATRIXSET=PM&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}', { maxZoom: 17, attribution: '&copy; <a href="https://www.ign.fr/" target="_blank" rel="noopener">IGN</a>' }) }
       ];
       var current = null, buttons = [];
       var setBase = function (id, remember) {
@@ -87,7 +87,7 @@
       });
       map.addControl(new Switch());
       var saved = null; try { saved = localStorage.getItem('lob-fond'); } catch (e) {}
-      setBase(saved || 'plan', false);
+      setBase(saved || 'sombre', false);
       L.polyline(pts, { color: '#232323', weight: 8, opacity: 0.9, interactive: false }).addTo(map);
       var line = L.polyline(pts, { color: '#ed5f3e', weight: 4, interactive: false }).addTo(map);
       map.fitBounds(line.getBounds(), { padding: [28, 28] });
