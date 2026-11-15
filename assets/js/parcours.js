@@ -90,7 +90,7 @@
       setBase(saved || 'sombre', false);
       // Tracé : orange de marque bordé d'un fin liseré blanc, lisible sur les trois fonds
       var round = { lineJoin: 'round', lineCap: 'round', interactive: false };
-      L.polyline(pts, L.extend({ color: '#fff', weight: 7.5 }, round)).addTo(map);
+      L.polyline(pts, L.extend({ color: '#fff', weight: 6.5 }, round)).addTo(map);   // liseré d'environ 1 px de chaque côté
       var line = L.polyline(pts, L.extend({ color: '#ed5f3e', weight: 4.5 }, round)).addTo(map);
       map.fitBounds(line.getBounds(), { padding: [28, 28] });
       var pin = function (ll, label, cls, tip) {
