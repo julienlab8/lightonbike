@@ -1,7 +1,7 @@
 # LIGHT ON BIKE Pierre-Percée - informations en attente
 
 Liste tenue à jour à chaque échange. Sur le site, ces points portent la mention « À confirmer » ou « À venir ».
-Dernière mise à jour : 14/11/2026.
+Dernière mise à jour : 15/11/2026.
 
 ## À redemander (annoncé « à venir » ou « plus tard »)
 
@@ -43,5 +43,5 @@ Dossier Drive « PP 2022 - Photos Manu », séquence vélo uniquement (n° Pierr
 ## Avant la mise en ligne
 
 - [x] `wip: False` dans `tools/build.py` (fait le 14/11/2026)
-- [ ] Déployer sur Hostinger : hPanel > Avancé > Git, dépôt `https://github.com/julienlab8/lightonbike.git`, branche `main`, dans `public_html` vide
+- [x] Site en ligne sur https://www.lightonbike.com (déploiement Git Hostinger, vérifié le 15/11/2026). Après chaque push : cliquer sur « Déployer » dans hPanel > Avancé > Git, ou brancher le webhook.
 - [ ] Déclarer www.lightonbike.com et le sitemap dans Google Search Console

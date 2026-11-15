@@ -11,7 +11,7 @@ ErrorDocument 404 /404.html
 <FilesMatch "^(README|A-CONFIRMER)\.md$">
   Require all denied
 </FilesMatch>
-RedirectMatch 404 ^/(tools|photos-source|livrables)/
+RedirectMatch 404 ^/(tools|photos-source|livrables|\.github)/
 
 # Les pages sont toujours revérifiées auprès du serveur (CSS/JS/images versionnés par "?v=")
 <IfModule mod_headers.c>
