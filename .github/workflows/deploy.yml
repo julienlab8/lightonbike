@@ -1,0 +1,54 @@
+# Déploie le site sur l'hébergement Hostinger à chaque push sur main.
+# Identifiants à enregistrer dans GitHub (Settings > Secrets and variables > Actions) :
+#   FTP_HOST      nom d'hôte ou adresse IP FTP indiqué dans hPanel (sans "ftp://")
+#   FTP_USER      nom d'utilisateur FTP
+#   FTP_PASSWORD  mot de passe FTP
+# Rien n'est supprimé sur le serveur : les fichiers sont ajoutés ou remplacés.
+name: Déploiement Hostinger
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      FTP_HOST: ${{ secrets.FTP_HOST }}
+      FTP_USER: ${{ secrets.FTP_USER }}
+      FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+      FTP_DIR: ${{ vars.FTP_DIR || 'public_html' }}
+    steps:
+      - name: Vérifier les identifiants
+        id: check
+        run: |
+          if [ -z "$FTP_HOST" ] || [ -z "$FTP_USER" ] || [ -z "$FTP_PASSWORD" ]; then
+            echo "::warning::Secrets FTP_HOST, FTP_USER ou FTP_PASSWORD manquants : déploiement ignoré."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/checkout@v4
+        if: steps.check.outputs.ready == 'true'
+      - name: Envoyer le site
+        if: steps.check.outputs.ready == 'true'
+        run: |
+          sudo apt-get install -y -q lftp >/dev/null
+          lftp -u "$FTP_USER","$FTP_PASSWORD" "$FTP_HOST" -e "
+            set ftp:ssl-force true;
+            set ftp:ssl-protect-data true;
+            set net:max-retries 3;
+            set net:timeout 30;
+            mirror --reverse --verbose --parallel=4 \
+              --exclude-glob .git/ --exclude-glob .github/ --exclude-glob .gitignore \
+              --exclude-glob tools/ --exclude-glob livrables/ --exclude-glob photos-source/ \
+              --exclude-glob README.md --exclude-glob A-CONFIRMER.md \
+              ./ $FTP_DIR/;
+            bye"
