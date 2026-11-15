@@ -53,7 +53,7 @@
     var mapEl = root.querySelector('.rm-map'), map = null, cursor = null;
     if (mapEl && window.L) {
       mapEl.innerHTML = '';
-      map = L.map(mapEl, { scrollWheelZoom: false, zoomSnap: 0.25 });
+      map = L.map(mapEl, { scrollWheelZoom: true, wheelPxPerZoomLevel: 120, minZoom: 8, zoomSnap: 0.25 });   // la molette zoome dès que le pointeur est sur la carte
       // Trois fonds de carte au choix, de gauche à droite : sombre (par défaut), plan, satellite
       var osm = '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>';
       var bases = [
@@ -104,9 +104,6 @@
       }
       cursor = L.circleMarker(pts[0], { radius: 7, color: '#ed5f3e', weight: 3, fillColor: '#fff', fillOpacity: 1, opacity: 0, interactive: false }).addTo(map);
       cursor.setStyle({ fillOpacity: 0 });
-      // la molette ne zoome qu'après un clic sur la carte (pas de piège au défilement)
-      map.on('click', function () { map.scrollWheelZoom.enable(); });
-      mapEl.addEventListener('mouseleave', function () { map.scrollWheelZoom.disable(); });
     }
 
     /* ---------- Profil ---------- */
