@@ -1,7 +1,7 @@
 # LIGHT ON BIKE Pierre-Percée - informations en attente
 
 Liste tenue à jour à chaque échange. Sur le site, ces points portent la mention « À confirmer » ou « À venir ».
-Dernière mise à jour : 15/11/2026.
+Dernière mise à jour : 17/11/2026.
 
 ## À redemander (annoncé « à venir » ou « plus tard »)
 
@@ -38,7 +38,7 @@ Dernière mise à jour : 15/11/2026.
 ## Photos utilisées
 
 Dossier Drive « PP 2022 - Photos Manu », séquence vélo uniquement (n° PierrePerce2022-xxx) :
-455 (accueil), 480 (80 KM), 572 (145 KM), 487 (événement), 598 (appel final), 565 et 508 (en-têtes parcours), 465 (infos), 494 (accès), 442 (matériel), 503, 518, 535, 552, 580 (galerie).
+572 (accueil et image de partage), 480 (80 KM), 470 (145 KM), 487 (événement), 598 (appel final), 565 et 508 (en-têtes parcours), 465 (infos), 494 (accès), 442 (matériel), 503, 518, 535, 552, 580 (galerie).
 
 ## Avant la mise en ligne
 
