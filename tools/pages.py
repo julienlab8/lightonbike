@@ -93,8 +93,8 @@ def all_pages(b):
     cta_photo = photo("depart", "", "100vw")
 
     gal = [photo("galerie-%d" % i, alt, "(max-width: 860px) 50vw, 25vw") for i, alt in enumerate(
-        ["Cycliste en danseuse sur une route forestière", "Cycliste dans un virage en forêt", "Cycliste souriante en pleine montée",
-         "Cycliste en descente sur route humide", "Cycliste au cœur de la forêt vosgienne"], 1)]
+        ["Cycliste en maillot sur une route forestière", "Cycliste en veste de vélo dans un virage en forêt", "Cycliste souriante en pleine montée",
+         "Cycliste en descente sur route humide", "Cycliste penché dans un virage"], 1)]
     gallery = ""
     if all(gal):
         gallery = """

@@ -38,7 +38,7 @@ Dernière mise à jour : 17/11/2026.
 ## Photos utilisées
 
 Dossier Drive « PP 2022 - Photos Manu », séquence vélo uniquement (n° PierrePerce2022-xxx) :
-572 (accueil et image de partage), 480 (80 KM), 470 (145 KM), 487 (événement), 598 (appel final), 565 et 508 (en-têtes parcours), 465 (infos), 494 (accès), 442 (matériel), 503, 518, 535, 552, 580 (galerie).
+572 (accueil et image de partage), 480 (80 KM), 470 (145 KM), 487 (événement), 455 (appel final), 565 et 508 (en-têtes parcours), 465 (infos), 494 (accès), 442 (matériel), 450, 586, 535, 552, 522 (galerie). Photos en trifonction (503, 518, 580, 598) retirées le 17/11/2026.
 
 ## Avant la mise en ligne
 
